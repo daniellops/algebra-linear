@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class AL {
@@ -99,16 +100,17 @@ public class AL {
 				System.out.println(matrizTransformada[i][j]);
 			}
 		}
-		
+		List<AutoVetorAutoValor> autos;
 		if(ehTransposta) {
-			
+			autos = autoVetorAutoValorMatrizDiagonal(matrizTransformada);
 		} else {
-			
+			autos = autoVetorAutoValorMatrizComDentes(matrizTransformada);
 		}
-		return null;
+		return autos;
 	}
 	
 	public static List<AutoVetorAutoValor> autoVetorAutoValorMatrizDiagonal(Complex[][] a){
+		List<AutoVetorAutoValor> autos = new ArrayList<>();
 		for (int i = 0; i < a.length; i++) {
 			AutoVetorAutoValor auto = new AutoVetorAutoValor();
 			Complex autoValor = new Complex(a[i][i].re(), a[i][i].im());
@@ -116,11 +118,25 @@ public class AL {
 			autoVetor[i][0] = new Complex(1, 0);
 			auto.setAutoValor(autoValor);
 			auto.setAutoValor(autoValor);
+			autos.add(auto);
 		}
-		return null;
+		return autos;
 	}
 	
 	public static List<AutoVetorAutoValor> autoVetorAutoValorMatrizComDentes(Complex[][] a){
+		return null;
+	}
+	
+	public static SVD svd(Complex[][] a) {
+		Complex[][] aux1 = Matrix.multiplicacao(a, Matrix.transposta(a));
+		Complex[][] aux2 = Matrix.multiplicacao(Matrix.transposta(a), a);
+		Complex[][] abarra;
+		if(aux1.length * aux1[0].length < aux2.length * aux2[0].length) {
+			abarra = aux1;
+		} else {
+			abarra = aux2;
+		}
+		autoVetorAutoValorHouseHolderQR(abarra);
 		return null;
 	}
 
