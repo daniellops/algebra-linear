@@ -136,8 +136,37 @@ public class AL {
 		} else {
 			abarra = aux2;
 		}
-		autoVetorAutoValorHouseHolderQR(abarra);
-		return null;
+		Complex[][] u = Matrix.criarMatrizZerada(a.length, a.length);
+		Complex[][] s = Matrix.criarMatrizZerada(a.length, a[0].length);
+		Complex[][] v = Matrix.criarMatrizZerada(a[0].length, a[0].length);
+		
+		List<AutoVetorAutoValor> autos = autoVetorAutoValorHouseHolderQR(abarra);
+		int indice = 0;
+		for (AutoVetorAutoValor auto : autos) {
+			Complex[][] autoVetor = auto.getAutoVetor();
+			for (int i = 0; i < autoVetor.length; i++) {
+				v[i][indice] = new Complex(autoVetor[i][0].re(), autoVetor[i][0].im());
+			}
+			s[indice][indice] = new Complex(auto.getAutoValor().re(), auto.getAutoValor().im());
+		}
+		
+		for (int i = 0; i < a[0].length; i++) {
+			double rho = Math.sqrt(s[i][i].re());
+			rho = 1 / rho;
+			
+			Complex[][] av = Matrix.multiplicacao(a, Matrix.getColuna(v, i));
+			Complex[][] coluna = Matrix.multiplicacao(av, rho);
+			
+			for (int j = 0; j < coluna.length; j++) {
+				u[j][i] = coluna[j][0];
+			}
+		}
+		
+		SVD svd = new SVD();
+		svd.setU(u);
+		svd.setS(s);
+		svd.setV(v);
+		return svd;
 	}
 
 }
