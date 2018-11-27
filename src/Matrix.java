@@ -127,7 +127,7 @@ public class Matrix {
 	public static boolean ehTransposta(Complex[][] a) {
 		for (int i = 0; i < a.length; i++) {
 			for (int j = 0; j < i; j++) {
-				if (a[i][j].re() == a[i][j].re() && a[i][j].im() == a[i][j].im())
+				if (a[i][j].re() != a[i][j].re() || a[i][j].im() != a[i][j].im())
 					return false;
 			}
 		}

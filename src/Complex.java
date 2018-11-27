@@ -46,6 +46,25 @@ public class Complex {
         if (im <  0) return re + " - " + (-im) + "i";
         return re + " + " + im + "i";
     }
+    
+    public Complex sqrt() {
+		double norm = norm();
+		double z = Math.sqrt(norm);
+		double tg = im / re;
+		double deg = Math.toDegrees(Math.atan(tg));
+		int ang = Math.round((float) deg);
+		double thetalinha = ang * 0.5;
+		double cos = Math.cos(thetalinha);
+		double sen = Math.sin(thetalinha);
+		return new Complex(z * cos, z * sen);
+	}
+    
+    public double norm() {
+		double x2 = Math.pow(re, 2);
+		double y2 = Math.pow(im, 2);
+
+		return Math.sqrt(x2 + y2);
+	}
 
     // return abs/modulus/magnitude
     public double abs() {
